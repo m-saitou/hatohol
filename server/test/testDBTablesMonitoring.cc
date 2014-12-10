@@ -297,9 +297,25 @@ struct AssertGetHostsArg
 		setDataDrivenTestParam(ddtParam);
 	}
 
+	// This should be moved to AssertGetHostResourceArg later
+	virtual bool isAuthorized(const HostInfo &info) override
+	{
+		return ::isAuthorized(userId, getHostId(info));
+	}
+
 	virtual HostIdType getHostId(const HostInfo &info) const override
 	{
-		return info.id;
+		for (size_t i = 0; i < NumTestServerHostDef; i++) {
+			const ServerHostDef &svHostDef = testServerHostDef[i];
+			if (svHostDef.serverId != info.serverId)
+				continue;
+			string hostIdStr = StringUtils::sprintf("%" FMT_HOST_ID,
+			                                        info.id);
+			if (svHostDef.hostIdInServer != hostIdStr)
+				continue;
+			return svHostDef.hostId;
+		}
+		return INVALID_HOST_ID;
 	}
 
 	virtual string makeOutputText(const HostInfo &hostInfo)
@@ -310,8 +326,8 @@ struct AssertGetHostsArg
 
 static void _assertGetHosts(AssertGetHostsArg &arg)
 {
-	loadTestDBHosts();
-	loadTestDBHostgroupElements();
+	loadTestDBServerHostDef();
+	loadTestDBHostHostgroup();
 
 	DECLARE_DBTABLES_MONITORING(dbMonitoring);
 	arg.fixup();

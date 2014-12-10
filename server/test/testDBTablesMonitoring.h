@@ -143,6 +143,8 @@ struct AssertGetHostResourceArg {
 		if (maxNumber && maxNumber < expectedNum)
 			expectedNum = maxNumber;
 		cppcut_assert_equal(expectedNum, actualRecordList.size());
+		if (isVerboseMode())
+			cut_notify("expectedNum: %zd\n", expectedNum);
 	}
 
 	virtual std::string makeOutputText(const TResourceType &record) = 0;
