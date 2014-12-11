@@ -319,8 +319,6 @@ protected:
 	  DBAgent &dbAgent, const EventInfo &eventInfo);
 	static void addItemInfoWithoutTransaction(
 	  DBAgent &dbAgent, const ItemInfo &itemInfo);
-	static void addHostgroupElementWithoutTransaction(
-	  DBAgent &dbAgent, const HostgroupElement &hostgroupElement);
 	static void addMonitoringServerStatusWithoutTransaction(
 	  DBAgent &dbAgent, const MonitoringServerStatus &serverStatus);
 	static void addIncidentInfoWithoutTransaction(
