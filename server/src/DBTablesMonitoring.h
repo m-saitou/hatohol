@@ -209,7 +209,8 @@ public:
 	  __attribute__ ((deprecated));
 	HatoholError getHostgroupElementList
 	  (HostgroupElementList &hostgroupElementList,
-	   const HostgroupElementQueryOption &option);
+	   const HostgroupElementQueryOption &option)
+	  __attribute__ ((deprecated));
 
 	void addHostgroupElement(HostgroupElement *mapHostHostgroupsInfo)
 	  __attribute__ ((deprecated));
