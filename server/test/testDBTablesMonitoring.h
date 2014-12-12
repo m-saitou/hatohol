@@ -234,7 +234,7 @@ struct AssertGetEventsArg
 		option.setTriggerId(triggerId);
 	}
 
-	virtual bool filterOutExpectedRecord(EventInfo *info) override
+	virtual bool filterOutExpectedRecord(const EventInfo *info) override
 	{
   		if (AssertGetHostResourceArg <EventInfo, EventsQueryOption>
 		      ::filterOutExpectedRecord(info)) {

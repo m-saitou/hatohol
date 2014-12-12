@@ -190,7 +190,7 @@ struct AssertGetItemsArg
 		option.setTargetItemGroupName(itemGroupName);
 	}
 
-	virtual bool filterOutExpectedRecord(ItemInfo *info) override
+	virtual bool filterOutExpectedRecord(const ItemInfo *info) override
 	{
 		if (AssertGetHostResourceArg<ItemInfo, ItemsQueryOption>
 		      ::filterOutExpectedRecord(info)) {
