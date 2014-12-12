@@ -433,7 +433,7 @@ static string makeHostgroupsOutput(const Hostgroup &hostgrp, const size_t &id)
 }
 
 static string makeMapHostsHostgroupsOutput(
-  const HostHostgroup &hostHostgrp, size_t id)
+  const HostHostgroup &hostHostgrp, const size_t &id)
 {
 	string expectedOut = StringUtils::sprintf(
 	  "%zd|%" FMT_SERVER_ID "|%s|%s\n",
@@ -445,7 +445,7 @@ static string makeMapHostsHostgroupsOutput(
 	return expectedOut;
 }
 
-static string makeHostsOutput(const HostInfo &hostInfo, size_t id)
+static string makeHostsOutput(const HostInfo &hostInfo, const size_t &id)
 {
 	string expectedOut = StringUtils::sprintf(
 	  "%zd|%" FMT_SERVER_ID "|%" FMT_HOST_ID "|%s|%d\n",
@@ -455,7 +455,7 @@ static string makeHostsOutput(const HostInfo &hostInfo, size_t id)
 	return expectedOut;
 }
 
-static string makeHostsOutput(const ServerHostDef &svHostDef, const size_t id)
+static string makeHostsOutput(const ServerHostDef &svHostDef, const size_t &id)
 {
 	string expectedOut = StringUtils::sprintf(
 	  "%zd|" DBCONTENT_MAGIC_ANY "|%" FMT_SERVER_ID "|%s|%s|%d\n",
