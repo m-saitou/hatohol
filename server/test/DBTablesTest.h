@@ -258,6 +258,7 @@ void loadTestDBIncidentTracker(void);
 
 void loadTestDBServerHostDef(void);
 void loadTestDBVMInfo(void);
+void loadTestDBHostgroup(void);
 void loadTestDBHostHostgroup(void);
 
 #endif // DBClientTest_h
