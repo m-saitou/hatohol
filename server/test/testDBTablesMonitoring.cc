@@ -1528,8 +1528,8 @@ void test_updateHostsAddNewHost(void)
 	// Prepare for the test data and the expected result.
 	HostInfoList hostInfoList;
 	string expect;
-	size_t i;
-	for (size_t i = 0; i < NumTestServerHostDef; i++) {
+	size_t i = 0;
+	for (; i < NumTestServerHostDef; i++) {
 		HostInfo hostInfo;
 		conv(hostInfo, testServerHostDef[i]);
 		if (hostInfo.serverId != targetServerId)
@@ -1552,7 +1552,6 @@ void test_updateHostsAddNewHost(void)
 	  coldef[IDX_HOST_SERVER_HOST_DEF_SERVER_ID].columnName,
 	  targetServerId,
 	  coldef[IDX_HOST_SERVER_HOST_DEF_ID].columnName);
-	printf("statement: %s\n", statement.c_str());
 	assertDBContent(&dbAgent, statement, expect);
 }
 
