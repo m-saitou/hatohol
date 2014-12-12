@@ -1035,6 +1035,8 @@ void _assertGetNumberOfTriggers(DBTablesMonitoring &dbMonitoring,
 	  dbMonitoring.getNumberOfBadTriggers(option, severity);
 	const size_t expect = getNumberOfTestTriggers(
 	  serverId, hostgroupId, severity);
+	if (isVerboseMode())
+		cut_notify("The expected number of triggesr: %zd\n", expect);
 	cppcut_assert_equal(expect, actual,
 			    cut_message(
 			      "sv: %" FMT_SERVER_ID ", "
@@ -1071,7 +1073,7 @@ void data_getNumberOfAllBadTriggers(void)
 void test_getNumberOfAllBadTriggers(gconstpointer data)
 {
 	loadTestDBTriggers();
-	loadTestDBHostgroupElements();
+	loadTestDBHostHostgroup();
 
 	const ServerIdType targetServerId = testTriggerInfo[0].serverId;
 	const HostgroupIdType hostgroupId =
