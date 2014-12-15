@@ -157,7 +157,7 @@ static void _assertTriggers(const string &path, const string &callbackName = "",
                             uint64_t hostId = ALL_HOSTS)
 {
 	loadTestDBTriggers();
-	loadTestDBHosts();
+	loadTestDBServerHostDef();
 	startFaceRest();
 
 	RequestArg arg(path, callbackName);
