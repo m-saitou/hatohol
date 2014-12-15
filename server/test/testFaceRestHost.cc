@@ -301,7 +301,7 @@ static void _assertItems(const string &path, const string &callbackName = "",
 			 ssize_t numExpectedItems = -1)
 {
 	loadTestDBItems();
-	loadTestDBHosts();
+	loadTestDBServerHostDef();
 	startFaceRest();
 
 	RequestArg arg(path, callbackName);
@@ -638,7 +638,7 @@ void test_getHistoryWithMinimumParameter(void)
 {
 	startFaceRest();
 	loadTestDBItems();
-	loadTestDBHosts();
+	loadTestDBServerHostDef();
 
 	RequestArg arg("/history");
 	StringMap params;
