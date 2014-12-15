@@ -996,7 +996,7 @@ cut_trace(_assertGetNumberOfTriggers(D,S,H,V))
 void test_getNumberOfTriggersBySeverity(gconstpointer data)
 {
 	loadTestDBTriggers();
-	loadTestDBHostgroupElements();
+	loadTestDBHostHostgroup();
 
 	const ServerIdType targetServerId = testTriggerInfo[0].serverId;
 	const HostgroupIdType hostgroupId =
