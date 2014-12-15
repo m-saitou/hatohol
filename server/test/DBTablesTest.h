@@ -73,9 +73,6 @@ extern const UserIdType userIdWithMultipleAuthorizedHostgroups;
 extern AccessInfo testAccessInfo[];
 extern const size_t NumTestAccessInfo;
 
-extern HostgroupInfo testHostgroupInfo[];
-extern const size_t NumTestHostgroupInfo;
-
 extern HostgroupElement testHostgroupElement[];
 extern const size_t NumTestHostgroupElement;
 
