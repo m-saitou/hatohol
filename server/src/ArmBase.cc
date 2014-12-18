@@ -372,18 +372,25 @@ void ArmBase::registerAvailableTrigger(const ArmPollingResult &type,
 
 void ArmBase::setInitialTrrigerStatus(void)
 {
-	ThreadLocalDBCache cache;
-	DBTablesMonitoring &dbMonitoring = cache.getMonitoring();
 	const MonitoringServerInfo &svInfo = getServerInfo();
 
-	HostInfo hostInfo;
-	hostInfo.serverId = svInfo.id;
-	hostInfo.id = MONITORING_SERVER_SELF_ID;
-	hostInfo.hostName = 
+	ServerHostDef svHostDef;
+	svHostDef.id = AUTO_INCREMENT_VALUE;
+	svHostDef.hostId = AUTO_ASSIGNED_ID;
+	svHostDef.serverId = svInfo.id;
+	// TODO: Use a more readable string host name.
+	svHostDef.hostIdInServer =
+	  StringUtils::sprintf("%" FMT_HOST_ID, MONITORING_SERVER_SELF_ID);
+	svHostDef.name =
 		StringUtils::sprintf("%s%s", svInfo.hostName.c_str(),
 				     SERVER_SELF_MONITORING_SUFFIX);
-	hostInfo.validity = HOST_VALID_SELF_MONITORING;
-	dbMonitoring.addHostInfo(&hostInfo);
+	svHostDef.status = HOST_STAT_NORMAL;
+	UnifiedDataStore *dataStore = UnifiedDataStore::getInstance();
+	HatoholError err = dataStore->upsertHost(svHostDef);
+	if (err != HTERR_OK) {
+		MLPL_ERR("Failed to register a host for self monitoring: "
+		         "(%d) %s.", err.getCode(), err.getCodeName().c_str());
+	}
 
 	TriggerInfo triggerInfo;
 	TriggerInfoList triggerInfoList;
@@ -394,6 +401,10 @@ void ArmBase::setInitialTrrigerStatus(void)
 			createTriggerInfo(trgInfo, triggerInfoList);
 		}
 	}
+
+	// TODO: Use UnifiedDataStore
+	ThreadLocalDBCache cache;
+	DBTablesMonitoring &dbMonitoring = cache.getMonitoring();
 	dbMonitoring.addTriggerInfoList(triggerInfoList);
 }
 
