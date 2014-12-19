@@ -137,6 +137,7 @@ public:
 	HatoholError upsertHosts(const ServerHostDefVect &serverHostDefs);
 
 	HatoholError upsertHostgroups(const HostgroupVect &hostgroups);
+	HatoholError upsertHostHostgroups(const HostHostgroupVect &hostHostgrps);
 
 
 	// Action
