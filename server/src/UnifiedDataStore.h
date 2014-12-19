@@ -136,6 +136,8 @@ public:
 	 */
 	HatoholError upsertHosts(const ServerHostDefVect &serverHostDefs);
 
+	HatoholError upsertHostgroups(const HostgroupVect &hostgroups);
+
 
 	// Action
 	HatoholError getActionList(ActionDefList &actionList,
