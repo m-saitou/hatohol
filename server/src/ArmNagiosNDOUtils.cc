@@ -690,7 +690,6 @@ void ArmNagiosNDOUtils::getHost(void)
 
 	const MonitoringServerInfo &svInfo = getServerInfo();
 	ServerHostDefVect svHostDefs;
-	HostInfoList hostInfoList;
 	const ItemGroupList &grpList =
 	  m_impl->selectHostArg.dataTable->getItemGroupList();
 	svHostDefs.reserve(grpList.size());
