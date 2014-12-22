@@ -114,7 +114,7 @@ static void _assertGetTriggerInfoList(
 {
 	loadTestDBTriggers();
 	loadTestDBServerHostDef();
-	loadTestDBHostHostgroup();
+	loadTestDBHostgroupMember();
 
 	AssertGetTriggersArg arg(ddtParam);
 	arg.targetServerId = serverId;
@@ -316,15 +316,15 @@ static void conv(ServerHostDef &svHostDef, const HostInfo &hostInfo)
 }
 
 static void conv(HostgroupElement &hostgrpElem,
-                 const HostHostgroup &hostHostgrp)
+                 const HostgroupMember &hostgrpMember)
 {
-	hostgrpElem.id = hostHostgrp.id;
-	hostgrpElem.serverId = hostHostgrp.serverId;
+	hostgrpElem.id = hostgrpMember.id;
+	hostgrpElem.serverId = hostgrpMember.serverId;
 	cppcut_assert_equal(
-	  1, sscanf(hostHostgrp.hostIdInServer.c_str(),
+	  1, sscanf(hostgrpMember.hostIdInServer.c_str(),
 	            "%" FMT_HOST_ID, &hostgrpElem.hostId));
 	cppcut_assert_equal(
-	  1, sscanf(hostHostgrp.hostgroupIdInServer.c_str(),
+	  1, sscanf(hostgrpMember.hostgroupIdInServer.c_str(),
 	            "%" FMT_HOST_GROUP_ID, &hostgrpElem.groupId));
 }
 
@@ -341,7 +341,7 @@ static void conv(HostgroupInfo &hostgrpInfo, const Hostgroup &hostgrp)
 static void _assertGetHosts(AssertGetHostsArg &arg)
 {
 	loadTestDBServerHostDef();
-	loadTestDBHostHostgroup();
+	loadTestDBHostgroupMember();
 
 	DECLARE_DBTABLES_MONITORING(dbMonitoring);
 	arg.fixup();
@@ -411,14 +411,14 @@ static string makeHostgroupsOutput(const Hostgroup &hostgrp, const size_t &id)
 }
 
 static string makeMapHostsHostgroupsOutput(
-  const HostHostgroup &hostHostgrp, const size_t &id)
+  const HostgroupMember &hostgrpMember, const size_t &id)
 {
 	string expectedOut = StringUtils::sprintf(
 	  "%zd|%" FMT_SERVER_ID "|%s|%s\n",
 	  id + 1,
-	  hostHostgrp.serverId,
-	  hostHostgrp.hostIdInServer.c_str(),
-	  hostHostgrp.hostgroupIdInServer.c_str());
+	  hostgrpMember.serverId,
+	  hostgrpMember.hostIdInServer.c_str(),
+	  hostgrpMember.hostgroupIdInServer.c_str());
 
 	return expectedOut;
 }
@@ -498,7 +498,7 @@ void test_getTriggerInfo(void)
 {
 	loadTestDBTriggers();
 	loadTestDBServerHostDef();
-	loadTestDBHostHostgroup();
+	loadTestDBHostgroupMember();
 
 	int targetIdx = 2;
 	TriggerInfo &targetTriggerInfo = testTriggerInfo[targetIdx];
@@ -929,7 +929,7 @@ void data_getNumberOfTriggers(void)
 void test_getNumberOfTriggers(gconstpointer data)
 {
 	loadTestDBTriggers();
-	loadTestDBHostHostgroup();
+	loadTestDBHostgroupMember();
 
 	const ServerIdType targetServerId = testTriggerInfo[0].serverId;
 	const HostgroupIdType hostgroupId =
@@ -949,7 +949,7 @@ void test_getNumberOfTriggers(gconstpointer data)
 void test_getNumberOfTriggersForMultipleAuthorizedHostgroups(void)
 {
 	loadTestDBTriggers();
-	loadTestDBHostHostgroup();
+	loadTestDBHostgroupMember();
 
 	const ServerIdType targetServerId = testTriggerInfo[0].serverId;
 	const HostgroupIdType hostgroupId = ALL_HOST_GROUPS;
@@ -996,7 +996,7 @@ cut_trace(_assertGetNumberOfTriggers(D,S,H,V))
 void test_getNumberOfTriggersBySeverity(gconstpointer data)
 {
 	loadTestDBTriggers();
-	loadTestDBHostHostgroup();
+	loadTestDBHostgroupMember();
 
 	const ServerIdType targetServerId = testTriggerInfo[0].serverId;
 	const HostgroupIdType hostgroupId =
@@ -1019,7 +1019,7 @@ void data_getNumberOfAllBadTriggers(void)
 void test_getNumberOfAllBadTriggers(gconstpointer data)
 {
 	loadTestDBTriggers();
-	loadTestDBHostHostgroup();
+	loadTestDBHostgroupMember();
 
 	const ServerIdType targetServerId = testTriggerInfo[0].serverId;
 	const HostgroupIdType hostgroupId =
@@ -1366,14 +1366,15 @@ void test_addHostgroupElement(void)
 	HostgroupElementList hostgroupElementList;
 	DBAgent &dbAgent = dbMonitoring.getDBAgent();
 	string statement = "select * from ";
-	statement += tableProfileHostHostgroup.name;
+	statement += tableProfileHostgroupMember.name;
 	string expect;
 
-	for (size_t i = 0; i < NumTestHostHostgroup; i++) {
+	for (size_t i = 0; i < NumTestHostgroupMember; i++) {
 		HostgroupElement elem;
-		conv(elem, testHostHostgroup[i]);
+		conv(elem, testHostgroupMember[i]);
 		hostgroupElementList.push_back(elem);
-		expect += makeMapHostsHostgroupsOutput(testHostHostgroup[i], i);
+		expect += makeMapHostsHostgroupsOutput(
+		            testHostgroupMember[i], i);
 	}
 	dbMonitoring.addHostgroupElementList(hostgroupElementList);
 	assertDBContent(&dbAgent, statement, expect);
