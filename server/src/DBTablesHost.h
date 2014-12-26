@@ -22,6 +22,7 @@
 
 #include "DBTables.h"
 #include "DataQueryOption.h"
+#include "HostResourceQueryOption.h"
 
 enum HostStatus {
 	HOST_STAT_ALL    = -1,
@@ -82,11 +83,6 @@ typedef std::vector<HostgroupMember>        HostgroupMemberVect;
 typedef HostgroupMemberVect::iterator       HostgroupMemberVectIterator;
 typedef HostgroupMemberVect::const_iterator HostgroupMemberVectConstIterator;
 
-struct HostQueryOption : public DataQueryOption {
-public:
-	HostQueryOption(const UserIdType &userId = INVALID_USER_ID);
-};
-
 enum {
 	IDX_HOST_LIST_ID,
 	IDX_HOST_LIST_NAME,
@@ -140,6 +136,22 @@ extern const DBAgent::TableProfile tableProfileHostAccess;
 extern const DBAgent::TableProfile tableProfileVMList;
 extern const DBAgent::TableProfile tableProfileHostgroupList;
 extern const DBAgent::TableProfile tableProfileHostgroupMember;
+
+class HostsQueryOption : public HostResourceQueryOption {
+public:
+	HostsQueryOption(const UserIdType &userId = INVALID_USER_ID);
+	HostsQueryOption(DataQueryContext *dataQueryContext);
+	virtual ~HostsQueryOption();
+
+	virtual std::string getCondition(void) const override;
+
+	void setStatus(const HostStatus &status);
+	HostStatus getStatus(void) const;
+
+private:
+	struct Impl;
+	std::unique_ptr<Impl> m_impl;
+};
 
 class DBTablesHost : public DBTables {
 public:
@@ -268,7 +280,7 @@ public:
 	 * A target host ID.
 	 *
 	 * @param option
-	 * A HostQueryOption instance.
+	 * A HostsQueryOption instance.
 	 *
 	 * @param return
 	 * If the search is successfully done, HTERR_OK is returned even when
@@ -276,7 +288,7 @@ public:
 	 */
 	HatoholError getVirtualMachines(HostIdVector &virtualMachines,
 	                                const HostIdType &hypervisorHostId,
-	                                const HostQueryOption &option);
+	                                const HostsQueryOption &option);
 	/**
 	 * Get the hyperviosr.
 	 *
@@ -287,17 +299,17 @@ public:
 	 * A target host ID.
 	 *
 	 * @param option
-	 * A HostQueryOption instance.
+	 * A HostsQueryOption instance.
 	 *
 	 * @param return
 	 * If hypervisor is successfully found, HTERR_OK is returned.
 	 */
 	HatoholError getHypervisor(HostIdType &hypervisorHostId,
 	                           const HostIdType &hostId,
-	                           const HostQueryOption &option);
+	                           const HostsQueryOption &option);
 
 	bool isAccessible(
-	  const HostIdType &hostId, const HostQueryOption &option);
+	  const HostIdType &hostId, const HostsQueryOption &option);
 
 	/**
 	 * Get hosts.
@@ -308,7 +320,7 @@ public:
 	 * @return An error status.
 	 */
 	HatoholError getServerHostDefs(ServerHostDefVect &svHostDefVect,
-	                               const HostQueryOption &option);
+	                               const HostsQueryOption &option);
 
 protected:
 	static SetupInfo &getSetupInfo(void);
