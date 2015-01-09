@@ -143,6 +143,18 @@ const MonitoringServerInfo testServerInfo[] =
 	"fermion",                // password
 	"",                       // db_name
 },{
+	4,                        // id
+	MONITORING_SYSTEM_ZABBIX, // type
+	"mosquito.example.com",   // hostname
+	"10.100.10.52",           // ip_address
+	"KA",                     // nickname
+	30000,                    // port
+	3600,                     // polling_interval_sec
+	600,                      // retry_interval_sec
+	"Z",                      // user_name
+	"OTSU",                   // password
+	"zzz",                    // db_name
+},{
 	211,                      // id
 	MONITORING_SYSTEM_ZABBIX, // type
 	"x-men.example.com",      // hostname
