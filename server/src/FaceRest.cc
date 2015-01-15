@@ -927,7 +927,8 @@ static void addHostsMap(
 	option.setStatus(HOST_STAT_ALL);
 
 	UnifiedDataStore *dataStore = UnifiedDataStore::getInstance();
-	dataStore->getServerHostDefs(svHostDefVect, option);
+	THROW_HATOHOL_EXCEPTION_IF_NOT_OK(
+	  dataStore->getServerHostDefs(svHostDefVect, option));
 	ServerHostDefVectConstIterator svHostIt = svHostDefVect.begin();
 	agent.startObject("hosts");
 	for (; svHostIt != svHostDefVect.end(); ++svHostIt) {
