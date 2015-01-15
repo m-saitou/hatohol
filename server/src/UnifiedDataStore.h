@@ -107,10 +107,6 @@ public:
 	*/
 
 	// Host and Hostgroup
-	void getHostList(HostInfoList &hostInfoList,
-	                 const HostsQueryOption &option)
-	  __attribute__ ((deprecated));
-
 	HatoholError getHostgroupInfoList(
 	  HostgroupInfoList &hostgroupInfoList,
 	  const HostgroupsQueryOption &option);
