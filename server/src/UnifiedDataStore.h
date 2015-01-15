@@ -119,6 +119,9 @@ public:
 	HatoholError getServerHostDefs(ServerHostDefVect &svHostDefVect,
 	                               const HostsQueryOption &option);
 
+	HatoholError getHostgroups(HostgroupVect &hostgroups,
+	                           const HostgroupsQueryOption &option);
+
 	/**
 	 * Add hosts. If there's hosts already exist, they will be updated.
 	 *
