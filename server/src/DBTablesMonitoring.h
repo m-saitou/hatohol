@@ -178,11 +178,6 @@ public:
 	void setEventInfoList(const EventInfoList &eventInfoList,
 	                      const ServerIdType &serverId);
 
-	HatoholError getHostgroupElementList
-	  (HostgroupElementList &hostgroupElementList,
-	   const HostgroupElementQueryOption &option)
-	  __attribute__ ((deprecated));
-
 	void addHostInfo(HostInfo *hostInfo) __attribute__ ((deprecated));
 	void addHostInfoList(const HostInfoList &hostInfoList)
 	  __attribute__ ((deprecated));
