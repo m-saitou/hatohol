@@ -178,10 +178,6 @@ public:
 	void setEventInfoList(const EventInfoList &eventInfoList,
 	                      const ServerIdType &serverId);
 
-	void addHostInfo(HostInfo *hostInfo) __attribute__ ((deprecated));
-	void addHostInfoList(const HostInfoList &hostInfoList)
-	  __attribute__ ((deprecated));
-
 	/**
 	 * Update the host records.
 	 *
